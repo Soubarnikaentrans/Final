@@ -10,6 +10,8 @@ import numpy as np
 nltk.download('punkt')
 nltk.download('stopwords')
 
+app = Flask(__name__)
+
 def extract_text_from_pdf(pdf_path):
     document = fitz.open(pdf_path)
     text = ""
@@ -33,8 +35,6 @@ processed_text, original_sentences = preprocess_text(pdf_text)
 vectorizer = TfidfVectorizer()
 X = vectorizer.fit_transform(processed_text)
 
-app = Flask(__name__)
-
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -55,4 +55,3 @@ def retrieve_information(query):
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
-
